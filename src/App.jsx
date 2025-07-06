@@ -3,8 +3,12 @@ import Typography from "@mui/material/Typography";
 import { AccessAlarm } from "@mui/icons-material";
 import { ThreeDRotation } from "@mui/icons-material";
 import { HomeRepairService } from "@mui/icons-material";
+import { useContext } from "react";
+import { ColorModeContext } from "./themeContext";
 
 function App() {
+  const { toggleColorMode } = useContext(ColorModeContext);
+
   return (
     <>
       <div>Dacia</div>
@@ -21,6 +25,11 @@ function App() {
       <AccessAlarm />
       <ThreeDRotation />
       <HomeRepairService color="primary" />
+
+      <br />
+      <Button variant="contained" onClick={toggleColorMode}>
+        Chuyển đổi Light/Dark
+      </Button>
     </>
   );
 }
