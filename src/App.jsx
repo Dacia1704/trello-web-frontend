@@ -1,45 +1,91 @@
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { AccessAlarm } from "@mui/icons-material";
-import { ThreeDRotation } from "@mui/icons-material";
-import { HomeRepairService } from "@mui/icons-material";
+import DarkModeOutlined from "@mui/icons-material/DarkModeOutlined";
+import LightModeOutlined from "@mui/icons-material/LightModeOutlined";
+import SettingsBrightnessOutlined from "@mui/icons-material/SettingsBrightnessOutlined";
+import Container from "@mui/material/Container";
+import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
 import { useColorScheme } from "@mui/material";
+function ModeSelect() {
+  const { mode = "light", setMode } = useColorScheme();
 
-function ThemeToggle() {
-  const { mode, setMode } = useColorScheme();
-
-  const toggle = () => {
-    setMode(mode === "light" ? "dark" : "light");
+  const handleChange = (event) => {
+    setMode(event.target.value);
   };
 
   return (
-    <Button variant="contained" onClick={toggle}>
-      Chuyển sang {mode === "light" ? "Dark" : "Light"} Mode
-    </Button>
+    <FormControl size="small" sx={{ height: 0.75 }}>
+      <InputLabel id="system-mode-select-label">System Mode</InputLabel>
+      <Select
+        labelId="system-mode-select-label"
+        id="system-mode-select"
+        value={mode}
+        label="system-mode"
+        onChange={handleChange}
+      >
+        <MenuItem value={"light"}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <LightModeOutlined sx={{ marginRight: 2 }} />
+            Light
+          </div>
+        </MenuItem>
+        <MenuItem value={"dark"}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <DarkModeOutlined sx={{ marginRight: 2 }} />
+            Dark
+          </div>
+        </MenuItem>
+        <MenuItem value={"system"}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <SettingsBrightnessOutlined sx={{ marginRight: 2 }} />
+            System
+          </div>
+        </MenuItem>
+      </Select>
+    </FormControl>
   );
 }
-
 function App() {
   return (
-    <>
-      <div>Dacia</div>
-
-      <Typography variant="body2" color="text.secondary">
-        123
-      </Typography>
-
-      <Button variant="text">Text</Button>
-      <Button variant="contained">Contained</Button>
-      <Button variant="outlined">Outlined</Button>
-
-      <br />
-      <AccessAlarm />
-      <ThreeDRotation />
-      <HomeRepairService color="primary" />
-
-      <br />
-      <ThemeToggle />
-    </>
+    <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
+      <Box
+        sx={{
+          backgroundColor: "primary.light",
+          width: "100%",
+          height: (theme) => theme.trello.appBarHeight,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <ModeSelect />
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "primary.dark",
+          width: "100%",
+          height: (theme) => theme.trello.boardBarHeight,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        {" "}
+        Board Bar
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "primary.main",
+          width: "100%",
+          height: (theme) =>
+            `calc(100vh - ${theme.trello.appBarHeight} - ${theme.trello.boardBarHeight})`,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        Board Content
+      </Box>
+    </Container>
   );
 }
 
